@@ -21,23 +21,27 @@
       <button class="navbar-toggler m-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse justify-content-end pe-3" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active text-light" aria-current="page" href="/">Home</a>
+        <a class="nav-link active text-light text-md-dark text-center" aria-current="page" href="/">Home</a>
         {{#if session.isAuthenticated}}
-        <a class="nav-link text-light" href="/dashboard">My Decks</a>
-        <a class="nav-link text-light" href="/decks" id="searchDecks">Available Decks</a>
-        <a class="nav-link text-light" href="/decks/create">Create a Deck</a>
-        <a class="nav-link text-light" href="#" id="logout">Logout</a>
+        <a class="nav-link text-light text-md-dark text-center" href="/dashboard">My Decks</a>
+        <a class="nav-link text-light text-md-dark text-center" href="/decks" id="searchDecks">Available Decks</a>
+        <a class="nav-link text-light text-md-dark text-center" href="/decks/create">Create a Deck</a>
+        <a class="nav-link text-light text-md-dark text-center" href="#" id="logout">Logout</a>
         {{else}}
-        <a class="nav-link text-light" href="/login">Login</a>
-        <a class="nav-link text-light" href="/signup">Sign Up</a>
+        <a class="nav-link text-light text-md-dark text-center" href="/login">Login</a>
+        <a class="nav-link text-light text-md-dark text-center" href="/signup">Sign Up</a>
         {{/if}}
       </div>
     </div>
   </nav>
 
   {{{body}}}
+
+  <footer class="footer">
+    <h3 class="footer-h">Thank you for visiting Flashaholic!</h3>
+  </footer>
 
   {{#if session.isAuthenticated}}
   <script src="/javascript/logout.js"></script>
