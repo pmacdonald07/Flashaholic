@@ -10,19 +10,7 @@ router.get("/", (req, res) => {
     where: {
       is_public: true,
     },
-    attributes: [
-      "id",
-      "title",
-      "created_at",
-      "user_id",
-      "is_public",
-      //   [
-      //     sequelize.literal(
-      //       `(SELECT COUNT(*) FROM favorite WHERE deck.id = favorite.deck_id)`
-      //     ),
-      //     "favorite_count",
-      //   ],
-    ],
+    attributes: ["id", "title", "created_at", "user_id", "is_public"],
     include: [
       {
         model: Card,
@@ -42,61 +30,7 @@ router.get("/", (req, res) => {
       const decks = dbDeckData.map((deck) => deck.get({ plain: true }));
       res.render("homepage", {
         decks,
-        loggedIn: req.session.loggedIn,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
-
-router.get("/deck/:id", (req, res) => {
-  Deck.findOne({
-    where: {
-      id: req.params.id,
-    },
-    attributes: [
-      "id",
-      "title",
-      "created_at",
-      "user_id",
-      "is_public",
-      //   [
-      //     sequelize.literal(
-      //       `(SELECT COUNT(*) FROM favorite WHERE deck.id = favorite.deck_id)`
-      //     ),
-      //     "favorite_count",
-      //   ],
-    ],
-    include: [
-      {
-        model: Card,
-        attributes: ["id", "user_id", "deck_id", "front_text", "back_text"],
-      },
-      {
-        model: User,
-        attributes: ["username"],
-      },
-      {
-        model: Favorite,
-        attributes: ["user_id", "deck_id"],
-      },
-    ],
-  })
-    .then((dbDeckData) => {
-      if (!dbDeckData) {
-        res.status(404).json({ message: "No deck found with this id" });
-        return;
-      }
-
-      // serialize the data
-      const deck = dbDeckData.get({ plain: true });
-
-      // pass data to template
-      res.render("single-deck", {
-        deck,
-        loggedIn: req.session.loggedIn,
+        loggedIn: req.session.isAuthenticated,
       });
     })
     .catch((err) => {
@@ -106,11 +40,19 @@ router.get("/deck/:id", (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-  if (req.session.loggedIn) {
+  if (req.session.isAuthenticated) {
     res.redirect("/");
     return;
   }
   res.render("login");
+});
+
+router.get("/signup", (req, res) => {
+  if (req.session.isAuthenticated) {
+    res.redirect("/");
+    return;
+  }
+  res.render("register");
 });
 
 module.exports = router;

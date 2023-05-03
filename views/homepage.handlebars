@@ -1,0 +1,27 @@
+<div id="homepageCarousel" class="carousel slide" data-bs-ride="false">
+<h2 class="text-center mb-3 display-4">Welcome to Flashaholic!</h2>
+<h5 class="mb-3 text-center">Our aim is to provide a study tool where users can create decks of flash cards. Take a look at our publicly available decks, or make your own!</h5>
+  <div class="carousel-indicators">
+    {{#each decks as |deck|}}
+    <button type="button" data-bs-target="#homepageCarousel" data-bs-slide-to="{{@index}}" class="{{#if (is_zero @index)}}active{{/if}}" aria-current="true" aria-label="Slide {{inc @index}}"></button>
+    {{/each}}
+  </div>
+  <div class="carousel-inner">
+    {{#each decks as |deck|}}
+    <div class="carousel-item {{#if (is_zero @index)}}active{{/if}}">
+      <img src="/assets/imgs/project-2-bg.png" class="d-block w-100 mx-auto" alt="water-colour-background">
+      <h1 class="centered text-light">{{title}}</h1>
+      <div class="carousel-caption d-none d-sm-block bottom-right">
+        <p>{{user.username}}  |  {{cards.length}} {{format_plural "card" cards.length}}  |  <a href="/decks/{{id}}" class="">view deck</a></p>
+      </div>
+    </div>
+    {{/each}}
+  <button class="carousel-control-prev" type="button" data-bs-target="#homepageCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#homepageCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
